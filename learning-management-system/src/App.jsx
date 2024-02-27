@@ -6,6 +6,7 @@ import './App.css'
 import HomePage from './Pages/HomePage/HomePage'
 import AboutUs from './Components/AboutUs/AboutUs'
 import NotFound from './Pages/NotFound/NotFound'
+import Signup from './Pages/Signup/Signup'
 
 function App() {
 
@@ -15,7 +16,9 @@ function App() {
     <Routes>
        <Route path='/' element={<HomePage/>}></Route>
        <Route path='/about' element={<AboutUs/>}></Route>
+       <Route path='/signup' element={<Signup/>}></Route>
 
+ 
        <Route path='*' element={<NotFound/>}></Route>
     </Routes>
 
