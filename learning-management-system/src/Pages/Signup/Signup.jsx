@@ -1,14 +1,80 @@
 import React, { useState } from "react";
 import HomeLayout from "../../Layouts/HomeLayout";
 import { BsPersonCircle } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 const Signup = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
   const [previeImage, setPreviewImage] = useState("");
+
+  const [signupData, setSignupData] = useState({
+      fullName: "",
+      email: "",
+      password: "",
+      avatar:""
+  })
+ 
+  function handleUserInput(e){
+    const {name, value} = e.target;
+    setSignupData({
+        ...signupData,
+        [name]: value
+    })
+  }
+
+  function getImage(event){
+    event.preventDefault();
+    const uploadedImage = event.target.files[0];
+
+    if(uploadedImage){
+        setSignupData({
+            ...signupData,
+            avatar: uploadedImage
+        })
+        // file print
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(uploadedImage);
+        fileReader.addEventListener('load' , function(){
+            
+            setPreviewImage(this.result)
+        })
+        
+    }
+  }
+
+  function createNewAccount(event) {
+    event.preventDefault();
+    if(!signupData.email || !signupData.password || !signupData.fullName || !signupData.avatar) {
+        toast.error("Please fill all the details");
+        return;
+    }
+
+    //  // checking name field length
+    //  if(!signupData.fullName.length < 5) {
+    //     toast.error("Name should be atleast of 5 characters")
+    //     return;
+    // }
+    // // checking valid email
+    // if(!isEmail(signupData.email)) {
+    //     toast.error("Invalid email id");
+    //     return;
+    // }
+    // // checking password validation
+    // if(!isValidPassword(signupData.password)) {
+    //     toast.error("Password should be 6 - 16 character long with atleast a number and special character");
+    //     return;
+    // }
+  }
+  
   return (
     <HomeLayout>
       <div className="flex overflow-x-auto items-center justify-center h-[100vh]">
-        <form className="flex flex-col justify-center gap-3 rounded-lg p-4 text-white w-96 shadow-[0_0_10px_black]">
+        <form onSubmit={createNewAccount} noValidate className="flex flex-col justify-center gap-3 rounded-lg p-4 text-white w-96 shadow-[0_0_10px_black]">
           <h1 className="text-center text-2xl font-bold">Register Page</h1>
           <label htmlFor="image_uploads" className="cursor-pointer">
             {previeImage ? (
@@ -22,12 +88,28 @@ const Signup = () => {
             )}
           </label>
           <input
+          onChange={getImage}
             className="hidden"
             id="image_uploads"
             type="file"
             name="image_uploads"
             accept=".jpg, .jpeg, .png, .svg"
           />
+                   <div className="flex flex-col gap-1">
+            <label htmlFor="fullname" className="font-semibold">
+              Name
+            </label>
+            <input
+              type="text"
+              required
+              name="fullName"
+              id="fullname"
+              placeholder="Enter your Name.."
+              className="bg-transparent px-2 py-1  border"
+              onChange={handleUserInput}
+              value={signupData.fullName}
+            />
+          </div>
 
           <div className="flex flex-col gap-1">
             <label htmlFor="email" className="font-semibold">
@@ -40,6 +122,8 @@ const Signup = () => {
               id="email"
               placeholder="Enter your email.."
               className="bg-transparent px-2 py-1  border"
+              onChange={handleUserInput}
+              value={signupData.email}
             />
           </div>
 
@@ -54,6 +138,8 @@ const Signup = () => {
               id="password"
               placeholder="Enter your password.."
               className="bg-transparent px-2 py-1  border"
+              onChange={handleUserInput}
+              value={signupData.password}
             />
           </div>
 
