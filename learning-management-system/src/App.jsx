@@ -7,6 +7,7 @@ import HomePage from './Pages/HomePage/HomePage'
 import AboutUs from './Components/AboutUs/AboutUs'
 import NotFound from './Pages/NotFound/NotFound'
 import Signup from './Pages/Signup/Signup'
+import Login from './Pages/Login/Login'
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
        <Route path='/' element={<HomePage/>}></Route>
        <Route path='/about' element={<AboutUs/>}></Route>
        <Route path='/signup' element={<Signup/>}></Route>
-
+       <Route path='/login' element={<Login/>}></Route>
  
        <Route path='*' element={<NotFound/>}></Route>
     </Routes>
