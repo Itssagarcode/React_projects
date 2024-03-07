@@ -7,7 +7,7 @@ import { Footer, Header } from './components'
 
 const App = () => {
   // to access the env in vite (import.meta.env.variable name)  in react we use .env.procces.variablename
-  console.log(import.meta.env.VITE_APPWRITE_URL);
+  // console.log(import.meta.env.VITE_APPWRITE_URL);
 
   const[loading, setLoading] = useState(true)
   const dispatch  = useDispatch()
